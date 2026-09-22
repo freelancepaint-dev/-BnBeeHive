@@ -201,7 +201,16 @@ describe("BnBeeHive", function () {
     it("hireBees works after reentrancy ordering fix", async function () {
     await initialize();
     await hive.connect(alice).hireBees(ZERO, { value: ethers.parseEther("1") });
-    expect(await hive.bees(alice.address)).to.be.greaterThan(0);
+    expect(await hive.bees(alice.address)).to.be.greaterThan(
+});
+  });
+
+    it("rejects a zero honey seed", async function () {
+    await expect(
+      hive.connect(treasury).seedMarket(0, {
+        value: ethers.parseEther("1"),
+      })
+    ).to.be.revertedWith("zero seed");
   });
 
 });
