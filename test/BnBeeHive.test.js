@@ -201,9 +201,8 @@ describe("BnBeeHive", function () {
     it("hireBees works after reentrancy ordering fix", async function () {
     await initialize();
     await hive.connect(alice).hireBees(ZERO, { value: ethers.parseEther("1") });
-    expect(await hive.bees(alice.address)).to.be.greaterThan(
-  });
-  
+    expect(await hive.bees(alice.address)).
+      });
 
     it("rejects a zero honey seed", async function () {
     await expect(
@@ -212,5 +211,5 @@ describe("BnBeeHive", function () {
       })
     ).to.be.revertedWith("zero seed");
   });
-
 });
+
