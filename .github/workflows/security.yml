@@ -30,7 +30,5 @@ jobs:
 
       - name: Run full test suite
         run: npm test
-      - name: Apply compatible security fixes
-        run: npm audit fix || true
       - name: Check dependency vulnerabilities
         run: npm audit --audit-level=high
