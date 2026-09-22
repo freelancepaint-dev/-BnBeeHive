@@ -198,4 +198,10 @@ describe("BnBeeHive", function () {
 
     expect(after).to.equal(before);
   });
+    it("hireBees works after reentrancy ordering fix", async function () {
+    await initialize();
+    await hive.connect(alice).hireBees(ZERO, { value: ethers.parseEther("1") });
+    expect(await hive.bees(alice.address)).to.be.greaterThan(0);
+  });
+
 });
