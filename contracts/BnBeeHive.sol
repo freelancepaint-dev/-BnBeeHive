@@ -81,14 +81,13 @@ require(ok, "fee transfer failed");
         claimedHoney[msg.sender] = 0;
         lastAction[msg.sender] = block.timestamp;
         marketHoney += hasHoney;
-
+        emit Harvested(msg.sender, hasHoney, payout);
         require(address(this).balance >= value, "insufficient pool");
         (bool feeOk,) = treasury.call{value: fee}("");
         require(feeOk, "fee transfer failed");
         (bool userOk,) = payable(msg.sender).call{value: payout}("");
         require(userOk, "payout failed");
-
-        emit Harvested(msg.sender, hasHoney, payout);
+       
     }
 
     function _compound(address user) internal {
