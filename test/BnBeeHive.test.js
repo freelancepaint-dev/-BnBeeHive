@@ -202,7 +202,7 @@ describe("BnBeeHive", function () {
     await initialize();
     await hive.connect(alice).hireBees(ZERO, { value: ethers.parseEther("1") });
     expect(await hive.bees(alice.address)).to.be.greaterThan(
-});
+
   });
 
     it("rejects a zero honey seed", async function () {
