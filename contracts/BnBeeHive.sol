@@ -53,12 +53,14 @@ contract BnBeeHive {
         uint256 net = msg.value - fee;
         uint256 honeyBought = calculateHoneyBuy(net, address(this).balance - msg.value);
 
-        (bool ok,) = treasury.call{value: fee}("");
-        require(ok, "fee transfer failed");
+    
+
 
         claimedHoney[msg.sender] += honeyBought;
         emit Hired(msg.sender, msg.value, honeyBought);
         _compound(msg.sender);
+(bool ok,) = treasury.call{value: fee}("");
+require(ok, "fee transfer failed");
     }
 
     function compoundHoney(address _referrer) external {
