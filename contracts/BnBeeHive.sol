@@ -15,6 +15,15 @@ contract BnBeeHive {
     bool public initialized;
     uint256 public marketHoney;
 
+uint256 private _locked = 1;
+
+modifier nonReentrant() {
+    require(_locked == 1, "reentrant call");
+    _locked = 2;
+    _;
+    _locked = 1;
+}
+
     mapping(address => uint256) public bees;
     mapping(address => uint256) public claimedHoney;
     mapping(address => uint256) public lastAction;
@@ -43,7 +52,7 @@ contract BnBeeHive {
         emit Initialized(seedHoney);
     }
 
-    function hireBees(address _referrer) external payable {
+        function hireBees(address _referrer) external payable nonReentrant {
         require(initialized, "not initialized");
         require(msg.value > 0, "zero BNB");
 
@@ -69,7 +78,7 @@ require(ok, "fee transfer failed");
         _compound(msg.sender);
     }
 
-    function harvestHoney() external {
+        function harvestHoney() external nonReentrant {
         require(initialized, "not initialized");
         uint256 hasHoney = myHoney(msg.sender);
         require(hasHoney > 0, "no honey");
